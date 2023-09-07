@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+
+  "id": "storagecores_chests",
+  "version": "${version}",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": []
+  },
+
+  "name": "Storage Cores: Chests",
+  "description": "Adds Chests and Chest Minecarts.",
+  "authors": ["MessyEllie"],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/storage-cores",
+    "sources": "https://gitlab.com/BucketOfCompasses/storage-cores",
+    "issues": "https://gitlab.com/BucketOfCompasses/storage-cores/-/issues"
+  },
+  "icon": "icon.png",
+
+  "custom": {
+    "modmenu": {
+      "parent": "storagecores_base"
+    }
+  }
+}

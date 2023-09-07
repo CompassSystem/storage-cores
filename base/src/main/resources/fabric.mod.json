@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+
+  "id": "storagecores_base",
+  "version": "${version}",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": []
+  },
+
+  "name": "Storage Cores",
+  "description": "A spiritual successor to Expanded Storage.",
+  "authors": ["MessyEllie"],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/storage-cores",
+    "sources": "https://gitlab.com/BucketOfCompasses/storage-cores",
+    "issues": "https://gitlab.com/BucketOfCompasses/storage-cores/-/issues"
+  },
+  "icon": "icon.png"
+}
