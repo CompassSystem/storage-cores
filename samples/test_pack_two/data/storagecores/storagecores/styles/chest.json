@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": {
+    "storagecores:diamond": {
+      "texture": "storagecores:diamond_chest",
+      "advancement": "minecraft:story/mine_diamond"
+    },
+    "storagecores:village": {
+      "texture": "storagecores:village_chest",
+      "advancement": "minecraft:adventure/trade"
+    }
+  }
+}

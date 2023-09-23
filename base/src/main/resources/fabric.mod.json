@@ -6,7 +6,8 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": []
+    "main": ["messyellie.storagecores.base.Main"],
+    "client": ["messyellie.storagecores.base.ClientMain"]
   },
 
   "name": "Storage Cores",

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": {
+    "storagecores:emerald": {
+      "texture": "storagecores:emerald_chest",
+      "advancement": "minecraft:adventure/trade"
+    }
+  }
+}
