@@ -13,28 +13,41 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import java.io.Reader;
 import java.util.*;
 
-public class BasePropertyLoader<T extends ReplacingMap<R>, R> {
+public class BasePropertyLoader<PropFile extends ReplacingMap<Props>, Props> {
     private final String directory;
-    private final Codec<T> propertiesFileCodec;
+    private final Codec<PropFile> propertiesFileCodec;
+    private final Set<ResourceLocation> knownBases;
 
-    public BasePropertyLoader(String directory, Codec<T> propertiesFileCodec) {
+    public BasePropertyLoader(String directory, Codec<PropFile> propertiesFileCodec, Set<ResourceLocation> knownBases) {
         this.directory = directory;
         this.propertiesFileCodec = propertiesFileCodec;
+        this.knownBases = knownBases;
     }
 
     // todo: honestly this is hard to read, even for me who coded it, should try and make it easier to understand.
-    public Map<ResourceLocation, Map<ResourceLocation, R>> load(ResourceManager resourceManager) {
-        Map<ResourceLocation, List<T>> propertiesFilePerBase = new HashMap<>();
+    public Map<ResourceLocation, Map<ResourceLocation, Props>> load(ResourceManager resourceManager) {
+        Map<ResourceLocation, List<PropFile>> propertiesFilePerBase = new HashMap<>();
         FileToIdConverter fileToIdConverter = FileToIdConverter.json(directory);
 
         for (Map.Entry<ResourceLocation, List<Resource>> entry : fileToIdConverter.listMatchingResourceStacks(resourceManager).entrySet()) {
             ResourceLocation baseId = fileToIdConverter.fileToId(entry.getKey());
-            List<T> propertiesFiles = propertiesFilePerBase.computeIfAbsent(baseId, (id) -> new ArrayList<>());
 
+            // if base is not loaded, print a warning, todo: hide behind config
+            if (!knownBases.contains(baseId)) {
+                for (Resource resource : entry.getValue()) {
+                    Constants.LOGGER.info("Ignoring " + entry.getKey() + " from pack " + resource.sourcePackId() + " as base " + baseId + " is not loaded.");
+                }
+
+                continue;
+            }
+
+            List<PropFile> propertiesFiles = propertiesFilePerBase.computeIfAbsent(baseId, (id) -> new ArrayList<>());
+
+            // Load Properties from files replacing the list if required
             for (Resource resource : entry.getValue()) {
                 try (Reader reader = resource.openAsReader()) {
                     JsonElement element = JsonParser.parseReader(reader);
-                    T propertiesFile = propertiesFileCodec.parse(JsonOps.INSTANCE, element).getOrThrow(false, Constants.LOGGER::error);
+                    PropFile propertiesFile = propertiesFileCodec.parse(JsonOps.INSTANCE, element).getOrThrow(false, Constants.LOGGER::error);
 
                     if (propertiesFile.shouldReplace()) {
                         propertiesFiles.clear();
@@ -47,11 +60,12 @@ public class BasePropertyLoader<T extends ReplacingMap<R>, R> {
             }
         }
 
-        Map<ResourceLocation, Map<ResourceLocation, R>> propertiesPerBase = new HashMap<>();
+        Map<ResourceLocation, Map<ResourceLocation, Props>> propertiesPerBase = new HashMap<>();
 
-        for (Map.Entry<ResourceLocation, List<T>> propertiesFiles : propertiesFilePerBase.entrySet()) {
-            for (T propertiesFile : propertiesFiles.getValue()) {
-                for (Map.Entry<ResourceLocation, R> keyedProperties : propertiesFile.values().entrySet()) {
+        // Go through each properties file and add all properties to a map depending on what base it's a property for.
+        for (Map.Entry<ResourceLocation, List<PropFile>> propertiesFiles : propertiesFilePerBase.entrySet()) {
+            for (PropFile propertiesFile : propertiesFiles.getValue()) {
+                for (Map.Entry<ResourceLocation, Props> keyedProperties : propertiesFile.values().entrySet()) {
                     propertiesPerBase.computeIfAbsent(propertiesFiles.getKey(), (id) -> new HashMap<>()).put(keyedProperties.getKey(), keyedProperties.getValue());
                 }
             }

@@ -11,13 +11,17 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+
+import java.util.Set;
 
 public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
-        StylesLoader stylesLoader = new StylesLoader();
-        TiersLoader tiersLoader = new TiersLoader();
+        Set<ResourceLocation> knownBases = Set.of();
+        StylesLoader stylesLoader = new StylesLoader(knownBases);
+        TiersLoader tiersLoader = new TiersLoader(knownBases);
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(stylesLoader);
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(tiersLoader);
