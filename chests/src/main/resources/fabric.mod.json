@@ -6,16 +6,16 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": []
+    "storagecores:addon": ["compass_system.storagecores.chests.Main"]
   },
 
   "name": "Storage Cores: Chests",
   "description": "Adds Chests and Chest Minecarts.",
-  "authors": ["MessyEllie"],
+  "authors": ["CompassSystem"],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/storage-cores",
-    "sources": "https://gitlab.com/BucketOfCompasses/storage-cores",
-    "issues": "https://gitlab.com/BucketOfCompasses/storage-cores/-/issues"
+    "sources": "https://gitlab.com/Compass_System/storage-cores",
+    "issues": "https://gitlab.com/Compass_System/storage-cores/-/issues"
   },
   "icon": "icon.png",
 

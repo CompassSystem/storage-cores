@@ -1,4 +1,4 @@
-import messyellie.storagecores.coreplugin.addBaseDependency
+import compass_system.storagecores.coreplugin.addBaseDependency
 
 plugins {
     id("core-plugin")

@@ -1,5 +1,5 @@
 import net.fabricmc.loom.task.RemapJarTask
-import messyellie.storagecores.coreplugin.JsonNormalizerReader
+import compass_system.storagecores.coreplugin.JsonNormalizerReader
 
 plugins {
     `java-library`
