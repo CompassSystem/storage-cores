@@ -1,7 +1,7 @@
 package compass_system.storagecores.base;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import compass_system.storagecores.base.addon.StorageCoreAddon;
+import compass_system.storagecores.base.api.addon.StorageCoreAddon;
 import compass_system.storagecores.base.commands.StylesCommands;
 import compass_system.storagecores.base.data.styles.StylesLoader;
 import compass_system.storagecores.base.data.tiers.TiersLoader;
@@ -16,23 +16,25 @@ import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
-        Set<ResourceLocation> knownBases = new HashSet<>();
+        AddonRegistryImpl registry = new AddonRegistryImpl();
 
         List<StorageCoreAddon> addons = FabricLoader.getInstance().getEntrypoints("storagecores:addon", StorageCoreAddon.class);
 
         for (StorageCoreAddon addon : addons) {
-            knownBases.addAll(addon.getBases());
+            addon.initialize(registry);
         }
 
+        Set<ResourceLocation> knownBases = registry.getKnownBases();
+        Set<ResourceLocation> requiredCores = registry.getRequiredCores();
+
         StylesLoader stylesLoader = new StylesLoader(knownBases);
-        TiersLoader tiersLoader = new TiersLoader(knownBases);
+        TiersLoader tiersLoader = new TiersLoader(requiredCores);
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(stylesLoader);
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(tiersLoader);

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": {
+    "storagecores:wood": {
+      "capacity": 27,
+      "block_properties": {
+        "hardness": 20,
+        "resistance": 20
+      },
+      "item_properties": {
+        "fire_resistant": true
+      }
+    }
+  }
+}

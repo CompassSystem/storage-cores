@@ -1,7 +1,7 @@
 package compass_system.storagecores.base.data.styles;
 
 import compass_system.storagecores.base.Constants;
-import compass_system.storagecores.base.data.BasePropertyLoader;
+import compass_system.storagecores.base.data.UnitPropertyLoader;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -25,7 +25,7 @@ public class StylesLoader implements IdentifiableResourceReloadListener {
     @Override
     public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
         return CompletableFuture
-                .supplyAsync(() -> new BasePropertyLoader<>(Constants.MOD_ID + "/styles", StylesFile.CODEC, knownBases).load(resourceManager), backgroundExecutor)
+                .supplyAsync(() -> new UnitPropertyLoader<>(Constants.MOD_ID + "/styles", StylesFile.CODEC, "base", knownBases).load(resourceManager), backgroundExecutor)
                 .thenCompose(preparationBarrier::wait)
                 .thenAcceptAsync(values -> styles = values, gameExecutor);
     }

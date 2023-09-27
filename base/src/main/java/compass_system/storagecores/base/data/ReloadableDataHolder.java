@@ -39,6 +39,20 @@ public class ReloadableDataHolder {
     }
 
     public static void setTiers(Map<ResourceLocation, Map<ResourceLocation, TierEntry>> values) {
+        if (Constants.IS_DEBUG) {
+            StringBuilder builder = new StringBuilder();
+
+            builder.append("Loading Tiers:\n");
+            for (Map.Entry<ResourceLocation, Map<ResourceLocation, TierEntry>> tiersForCore : values.entrySet()) {
+                builder.append("  Tiers for \"").append(tiersForCore.getKey()).append("\":\n");
+                for (Map.Entry<ResourceLocation, TierEntry> tier : tiersForCore.getValue().entrySet()) {
+                    builder.append("    ").append(tier.getKey()).append(" = ").append(TierEntry.CODEC.encodeStart(JsonOps.INSTANCE, tier.getValue()).getOrThrow(false, Constants.LOGGER::warn)).append("\n");
+                }
+            }
+
+            Constants.LOGGER.info(builder.toString());
+        }
+
         tiers = values;
     }
 
