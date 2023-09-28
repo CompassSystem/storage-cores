@@ -3,6 +3,9 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
+    gradlePluginPortal()
+
     maven {
         name = "Fabric Maven"
         url = uri("https://maven.fabricmc.net/")
@@ -17,12 +20,10 @@ repositories {
         name = "NeoForge Maven"
         url = uri("https://maven.neoforged.net/releases")
     }
-
-    mavenCentral()
-    gradlePluginPortal()
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
     implementation("dev.architectury:architectury-loom:1.2-SNAPSHOT")
     implementation("io.github.juuxel:loom-vineflower:1.11.0")
     implementation("com.google.code.gson:gson:2.10.1")

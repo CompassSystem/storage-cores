@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import net.fabricmc.loom.task.RemapJarTask
 import compass_system.storagecores.coreplugin.JsonNormalizerReader
 
@@ -5,6 +7,7 @@ plugins {
     `java-library`
     id("dev.architectury.loom")
     id("io.github.juuxel.loom-vineflower")
+    kotlin("jvm")
 }
 
 val modId = "storagecores_${project.name}"
@@ -51,6 +54,7 @@ dependencies {
 
     modImplementation("net.fabricmc:fabric-loader:0.14.21")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.88.1+1.20.1")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.10.10+kotlin.1.9.10")
 
     compileOnly("org.jetbrains:annotations:24.0.1")
 }
