@@ -6,7 +6,12 @@
 
   "environment": "*",
   "entrypoints": {
-    "storagecores:addon": ["compass_system.storagecores.chests.Main"]
+    "storagecores:addon": [
+      {
+        "adapter": "kotlin",
+        "value": "compass_system.storagecores.chests.Main"
+      }
+    ]
   },
 
   "name": "Storage Cores: Chests",

@@ -19,6 +19,7 @@
       }
     ]
   },
+  "accessWidener": "storagecores.accessWidener",
 
   "name": "Storage Cores",
   "description": "A spiritual successor to Expanded Storage.",

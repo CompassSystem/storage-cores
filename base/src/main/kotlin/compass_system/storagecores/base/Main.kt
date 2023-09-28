@@ -1,6 +1,7 @@
 package compass_system.storagecores.base
 
 import compass_system.storagecores.base.api.addon.StorageCoreAddon
+import compass_system.storagecores.base.commands.StorageBaseArgument
 import compass_system.storagecores.base.commands.StylesCommands
 import compass_system.storagecores.base.data.ReloadableDataHolder
 import compass_system.storagecores.base.data.styles.StylesLoader
@@ -11,12 +12,15 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.commands.Commands
+import net.minecraft.commands.synchronization.ArgumentTypeInfos
+import net.minecraft.commands.synchronization.SingletonArgumentInfo
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.server.packs.PackType
 
 object Main : ModInitializer {
-    override fun onInitialize() {
-        val registry = AddonRegistryImpl
+    internal val registry = AddonRegistryImpl
 
+    override fun onInitialize() {
         val addons = FabricLoader.getInstance().getEntrypoints("storagecores:addon", StorageCoreAddon::class.java)
 
         for (addon in addons) {
@@ -49,6 +53,8 @@ object Main : ModInitializer {
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register { player, playerJoining ->
             ReloadableDataHolder.sendValuesToPlayer(player, playerJoining)
         }
+
+        ArgumentTypeInfos.register(BuiltInRegistries.COMMAND_ARGUMENT_TYPE, "storagecores:storage_base", StorageBaseArgument::class.java, SingletonArgumentInfo.contextFree(StorageBaseArgument::storageBase))
 
         CommandRegistrationCallback.EVENT.register { dispatcher, context, selection ->
             dispatcher.register(Commands.literal(Constants.MOD_ID).apply {

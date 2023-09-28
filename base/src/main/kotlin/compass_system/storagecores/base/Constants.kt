@@ -9,8 +9,7 @@ import java.util.function.Function
 object Constants {
     const val MOD_ID = "storagecores"
     val LOGGER = LoggerFactory.getLogger(MOD_ID)
-    val IS_DEBUG =
-        FabricLoader.getInstance().isDevelopmentEnvironment || System.getProperties().contains(MOD_ID + "debug")
+    val IS_DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment || System.getProperties().contains(MOD_ID + "debug")
 
     val WOOD_TIER = resloc("wood")
     val COPPER_TIER = resloc("copper")
