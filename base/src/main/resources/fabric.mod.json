@@ -6,8 +6,18 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": ["compass_system.storagecores.base.Main"],
-    "client": ["compass_system.storagecores.base.ClientMain"]
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "compass_system.storagecores.base.Main"
+      }
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "compass_system.storagecores.base.ClientMain"
+      }
+    ]
   },
 
   "name": "Storage Cores",
