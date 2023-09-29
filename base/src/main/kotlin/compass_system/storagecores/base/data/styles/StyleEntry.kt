@@ -11,8 +11,7 @@ data class StyleEntry(val texture: ResourceLocation, val advancement: ResourceLo
             instance.group(
                 Constants.normalisedResourceLocationCodec().fieldOf("texture").forGetter(StyleEntry::texture),
                 Constants.normalisedResourceLocationCodec().fieldOf("advancement").forGetter(StyleEntry::advancement)
-            )
-                .apply(instance, ::StyleEntry)
+            ).apply(instance, ::StyleEntry)
         }
     }
 }

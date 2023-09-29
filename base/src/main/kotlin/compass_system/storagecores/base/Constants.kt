@@ -3,12 +3,13 @@ package compass_system.storagecores.base
 import com.mojang.serialization.Codec
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.ResourceLocation
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.function.Function
 
 object Constants {
     const val MOD_ID = "storagecores"
-    val LOGGER = LoggerFactory.getLogger(MOD_ID)
+    val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
     val IS_DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment || System.getProperties().contains(MOD_ID + "debug")
 
     val WOOD_TIER = resloc("wood")

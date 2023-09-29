@@ -19,7 +19,7 @@ object AddonRegistryImpl : AddonRegistry {
         requiredCores.add(id)
     }
 
-    fun getKnownBases() = Collections.unmodifiableSet(knownBases)
+    fun getKnownBases(): Set<ResourceLocation> = Collections.unmodifiableSet(knownBases)
 
-    fun getRequiredCores() = Collections.unmodifiableSet(requiredCores)
+    fun getRequiredCores(): Set<ResourceLocation> = Collections.unmodifiableSet(requiredCores)
 }

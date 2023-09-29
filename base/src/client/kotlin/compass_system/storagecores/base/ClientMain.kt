@@ -4,6 +4,7 @@ import compass_system.storagecores.base.data.SyncedDataHolder
 import compass_system.storagecores.base.data.styles.StyleEntry
 import compass_system.storagecores.base.data.tiers.TierEntry
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.resources.ResourceLocation
 
@@ -41,6 +42,10 @@ object ClientMain : ClientModInitializer {
             client.execute {
                 SyncedDataHolder.receiveReloadableData(styles, tiers)
             }
+        }
+
+        ClientPlayConnectionEvents.DISCONNECT.register { handler, client ->
+            SyncedDataHolder.receiveReloadableData(emptyMap(), emptyMap())
         }
     }
 }

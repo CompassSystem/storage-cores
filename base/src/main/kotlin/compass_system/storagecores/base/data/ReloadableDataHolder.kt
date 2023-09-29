@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 
 object ReloadableDataHolder {
-    private var styles: Map<ResourceLocation, Map<ResourceLocation, StyleEntry>> = mapOf()
-    private var tiers: Map<ResourceLocation, Map<ResourceLocation, TierEntry>> = mapOf()
+    private var styles: Map<ResourceLocation, Map<ResourceLocation, StyleEntry>> = emptyMap()
+    private var tiers: Map<ResourceLocation, Map<ResourceLocation, TierEntry>> = emptyMap()
 
     fun sendValuesToPlayer(player: ServerPlayer, playerJoining: Boolean) {
         if (Constants.IS_DEBUG) {

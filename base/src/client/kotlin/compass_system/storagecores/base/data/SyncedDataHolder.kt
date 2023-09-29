@@ -7,12 +7,12 @@ import compass_system.storagecores.base.data.tiers.TierEntry
 import net.minecraft.resources.ResourceLocation
 
 object SyncedDataHolder {
-    private var styles: Map<ResourceLocation, Map<ResourceLocation, StyleEntry>> = mapOf()
-    private var tiers: Map<ResourceLocation, Map<ResourceLocation, TierEntry>> = mapOf()
+    private var styles: Map<ResourceLocation, Map<ResourceLocation, StyleEntry>> = emptyMap()
+    private var tiers: Map<ResourceLocation, Map<ResourceLocation, TierEntry>> = emptyMap()
 
     fun receiveReloadableData(
-        styles: MutableMap<ResourceLocation, MutableMap<ResourceLocation, StyleEntry>>,
-        tiers: MutableMap<ResourceLocation, MutableMap<ResourceLocation, TierEntry>>
+        styles: Map<ResourceLocation, Map<ResourceLocation, StyleEntry>>,
+        tiers: Map<ResourceLocation, Map<ResourceLocation, TierEntry>>
     ) {
         this.styles = styles
         this.tiers = tiers

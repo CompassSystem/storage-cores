@@ -54,6 +54,11 @@ object Main : ModInitializer {
             ReloadableDataHolder.sendValuesToPlayer(player, playerJoining)
         }
 
+        ServerLifecycleEvents.SERVER_STOPPED.register { server ->
+            ReloadableDataHolder.setStyles(emptyMap())
+            ReloadableDataHolder.setTiers(emptyMap())
+        }
+
         ArgumentTypeInfos.register(BuiltInRegistries.COMMAND_ARGUMENT_TYPE, "storagecores:storage_base", StorageBaseArgument::class.java, SingletonArgumentInfo.contextFree(StorageBaseArgument::storageBase))
 
         CommandRegistrationCallback.EVENT.register { dispatcher, context, selection ->
