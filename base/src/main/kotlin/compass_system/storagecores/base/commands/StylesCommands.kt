@@ -15,7 +15,7 @@ object StylesCommands {
 
     fun register(builder: LiteralArgumentBuilder<CommandSourceStack?>) {
         builder.then(Commands.literal("styles")
-                .then(Commands.argument("type", StorageBaseArgument.storageBase())
+                .then(Commands.argument("base", StorageBaseArgument.storageBase())
                     .then(Commands.literal("unlocked").executes(StylesCommands::runUnlockedStylesCommand))
                     .then(Commands.literal("all").executes(StylesCommands::runAllStylesCommand))
                 )
@@ -24,7 +24,7 @@ object StylesCommands {
 
     private fun runUnlockedStylesCommand(context: CommandContext<CommandSourceStack>) : Int {
         val player = context.source.playerOrException
-        val baseId = ResourceLocationArgument.getId(context, "type")
+        val baseId = ResourceLocationArgument.getId(context, "base")
         val styles = ReloadableDataHolder.getStyles(baseId) ?: throw UNKNOWN_STYLE.create()
 
         val unlockedStyles = styles.entries.mapNotNull {
@@ -53,7 +53,7 @@ object StylesCommands {
     }
 
     private fun runAllStylesCommand(context: CommandContext<CommandSourceStack>) : Int {
-        val baseId = ResourceLocationArgument.getId(context, "type")
+        val baseId = ResourceLocationArgument.getId(context, "base")
         val styles = ReloadableDataHolder.getStyles(baseId) ?: throw UNKNOWN_STYLE.create()
 
         context.source.sendSuccess({ Component.literal(buildString {

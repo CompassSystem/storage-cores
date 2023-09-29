@@ -1,4 +1,4 @@
 {
-  "commands.storagecores.invalid_resource_location": "Invalid ResourceLocation.",
-  "commands.storagecores.invalid_style": "Invalid style ID."
+  "commands.storagecores.invalid_style": "Invalid style ID.",
+  "commands.storagecores.invalid_core": "Invalid core ID."
 }

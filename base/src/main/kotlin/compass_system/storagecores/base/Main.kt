@@ -2,7 +2,9 @@ package compass_system.storagecores.base
 
 import compass_system.storagecores.base.api.addon.StorageCoreAddon
 import compass_system.storagecores.base.commands.StorageBaseArgument
+import compass_system.storagecores.base.commands.StorageCoreArgument
 import compass_system.storagecores.base.commands.StylesCommands
+import compass_system.storagecores.base.commands.TiersCommands
 import compass_system.storagecores.base.data.ReloadableDataHolder
 import compass_system.storagecores.base.data.styles.StylesLoader
 import compass_system.storagecores.base.data.tiers.TiersLoader
@@ -60,10 +62,12 @@ object Main : ModInitializer {
         }
 
         ArgumentTypeInfos.register(BuiltInRegistries.COMMAND_ARGUMENT_TYPE, "storagecores:storage_base", StorageBaseArgument::class.java, SingletonArgumentInfo.contextFree(StorageBaseArgument::storageBase))
+        ArgumentTypeInfos.register(BuiltInRegistries.COMMAND_ARGUMENT_TYPE, "storagecores:storage_core", StorageCoreArgument::class.java, SingletonArgumentInfo.contextFree(StorageCoreArgument::storageCore))
 
         CommandRegistrationCallback.EVENT.register { dispatcher, context, selection ->
             dispatcher.register(Commands.literal(Constants.MOD_ID).apply {
                 StylesCommands.register(this)
+                TiersCommands.register(this)
             })
         }
     }

@@ -81,7 +81,7 @@ object ReloadableDataHolder {
         tiers = values
     }
 
-    fun getStyles(id: ResourceLocation): Map<ResourceLocation, StyleEntry>? {
-        return styles[id]
-    }
+    fun getStyles(id: ResourceLocation): Map<ResourceLocation, StyleEntry>? = styles[id]
+
+    fun getTiers(id: ResourceLocation): Map<ResourceLocation, TierEntry>? = tiers[id]
 }
