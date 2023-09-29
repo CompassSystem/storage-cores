@@ -6,15 +6,15 @@ import compass_system.storagecores.base.Constants
 import compass_system.storagecores.base.data.ReplacingMap
 import net.minecraft.resources.ResourceLocation
 
-data class TiersFile(val entries: Map<ResourceLocation, TierEntry>, val replace: Boolean) : ReplacingMap<TierEntry> {
-    override fun shouldReplace() = replace
+data class TiersFile(val values: Map<ResourceLocation, TierEntry>, val replace: Boolean) : ReplacingMap<TierEntry> {
+    override fun replaceExistingEntries() = replace
 
-    override fun values() = entries
+    override fun entries() = values
 
     companion object {
         val codec : Codec<TiersFile> = RecordCodecBuilder.create { instance ->
             instance.group(
-                Codec.unboundedMap(Constants.normalisedResourceLocationCodec(), TierEntry.codec).fieldOf("values").forGetter(TiersFile::entries),
+                Codec.unboundedMap(Constants.normalisedResourceLocationCodec(), TierEntry.codec).fieldOf("values").forGetter(TiersFile::values),
                 Codec.BOOL.optionalFieldOf("replace", false).forGetter(TiersFile::replace)
             ).apply(instance, ::TiersFile)
         }
