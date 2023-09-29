@@ -23,6 +23,8 @@ object Constants {
 
     val DEFAULT_STYLE = resloc("default")
 
+    val SYNC_ID = resloc("sync_data")
+
     private val normalisedResourceLocations = mutableMapOf<ResourceLocation, ResourceLocation>().apply {
         put(WOOD_TIER, WOOD_TIER)
         put(COPPER_TIER, COPPER_TIER)

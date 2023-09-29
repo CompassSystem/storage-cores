@@ -4,6 +4,10 @@ import com.mojang.serialization.JsonOps
 import compass_system.storagecores.base.Constants
 import compass_system.storagecores.base.data.styles.StyleEntry
 import compass_system.storagecores.base.data.tiers.TierEntry
+import io.netty.buffer.Unpooled
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 
@@ -14,6 +18,36 @@ object ReloadableDataHolder {
     fun sendValuesToPlayer(player: ServerPlayer, playerJoining: Boolean) {
         if (Constants.IS_DEBUG) {
             Constants.LOGGER.info("Sending reloadable data to: ${player.name.string}, is join: $playerJoining")
+        }
+
+        if (ServerPlayNetworking.canSend(player, Constants.SYNC_ID)) {
+            val buffer = FriendlyByteBuf(Unpooled.buffer())
+
+            buffer.writeInt(styles.size)
+            for ((baseId, styleEntries) in styles) {
+                buffer.writeResourceLocation(baseId)
+                buffer.writeInt(styleEntries.size)
+
+                for ((id, style) in styleEntries) {
+                    buffer.writeResourceLocation(id)
+                    buffer.writeJsonWithCodec(StyleEntry.codec, style)
+                }
+            }
+
+            buffer.writeInt(tiers.size)
+            for ((coreId, tierEntries) in tiers) {
+                buffer.writeResourceLocation(coreId)
+                buffer.writeInt(tierEntries.size)
+
+                for ((id, tier) in tierEntries) {
+                    buffer.writeResourceLocation(id)
+                    buffer.writeJsonWithCodec(TierEntry.codec, tier)
+                }
+            }
+
+            ServerPlayNetworking.send(player, Constants.SYNC_ID, buffer)
+        } else {
+            player.connection.disconnect(Component.literal("Please rejoin with Storage Cores installed."))
         }
     }
 
